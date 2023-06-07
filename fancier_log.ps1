@@ -35,13 +35,7 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
 	$BGcolor = "Black"
 
 	# Match lines with specific text and set their color
-    if ($line -match "Error") {
-        $FGcolor = "Red"
-    }
-	elseif ($line -match "Failed") {
-        $FGcolor = "Red"
-    }
-    elseif ($line -match "Warning") {
+   if ($line -match "Warning") {
         $FGcolor = "Yellow"
     }
     elseif ($line -match "Message") {
