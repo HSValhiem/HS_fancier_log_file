@@ -60,7 +60,11 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
         $FGcolor = "Black"
 		$BGcolor = "Red"
     }
-	
+
+    # Check if mod name or other info exists, to include in the output later. 
+	$pattern = "(?<=:)[^\]]+(?=\])"
+	$name = [regex]::Match($line, $pattern).Value.TrimStart()
+
 	# Remove everything between the first set of brackets. 
     $line = $line -replace '\[.*?\] ', ''
 	
@@ -76,10 +80,14 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
 	# Remove leading spaces from the line that are sometimes left after removing the timestamp
     $line = $line.TrimStart()
 	
-	# Add timestamps back in, we do this so that lines with no timestamps now have them.
+	# Add timestamps and mod names (or other info) back in, to maintain consistency in the log.
 	$timestamp = Get-Date -Format 'hh:mm:ss.ffff tt'
-	$line = "[$timestamp]: $line"
-	
+	if ($name -ne $null -and $name -ne '') {
+		$line = "[$timestamp]: ($name) $line"
+	}
+	else {
+		$line = "[$timestamp]: $line"
+	}
     # Write the colored line
     Write-Host $line -ForegroundColor $FGcolor -BackgroundColor $BGcolor 
 }
