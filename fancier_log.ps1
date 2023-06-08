@@ -35,8 +35,19 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
 	$BGcolor = "Black"
 
 	# Match lines with specific text and set their color
-   if ($line -match "Warning") {
+# Match lines with specific text and set their color
+	if ($line -match "Error" -or $line -match "Failed") {
+		$FGcolor = "Red"
+	}
+    elseif ($line -match "AzuAntiCheat") {
+        $FGcolor = "Black"
+		$BGcolor = "Red"
+    }
+   	elseif ($line -match "Warning") {
         $FGcolor = "Yellow"
+    }
+    elseif ($line -match "Steam game server initialized") {
+        $FGcolor = "Blue"
     }
     elseif ($line -match "Message") {
         $FGcolor = "Cyan"
@@ -46,19 +57,6 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
     }
     elseif ($line -match "BepInEx") {
         $FGcolor = "Green"
-    }
-    elseif ($line -match "Steam game server initialized") {
-        $FGcolor = "Blue"
-    }
-	elseif ($line -match "Error") {
-        $FGcolor = "Red"
-    }
-	elseif ($line -match "Failed") {
-        $FGcolor = "Red"
-    }
-    elseif ($line -match "AzuAntiCheat") {
-        $FGcolor = "Black"
-		$BGcolor = "Red"
     }
 
     # Check if mod name or other info exists, to include in the output later. 
