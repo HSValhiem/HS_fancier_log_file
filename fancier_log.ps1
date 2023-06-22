@@ -35,7 +35,6 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
 	$BGcolor = "Black"
 
 	# Match lines with specific text and set their color
-# Match lines with specific text and set their color
 	if ($line -match "Error" -or $line -match "Failed") {
 		$FGcolor = "Red"
 	}
@@ -46,7 +45,11 @@ Get-Content $filePath -Wait | Where-Object { $_ -match '\S' -and $_ -notmatch 'L
    	elseif ($line -match "Warning") {
         $FGcolor = "Yellow"
     }
-    elseif ($line -match "Steam game server initialized") {
+    elseif ($line -match "Received 1 configs") {
+		$FGcolor = "Yellow"
+        $BGcolor = "Blue"
+    }
+    elseif ($line -match "Steam game server initialized" -or $line -match "Game server connected") {
         $FGcolor = "Blue"
     }
     elseif ($line -match "Message") {
